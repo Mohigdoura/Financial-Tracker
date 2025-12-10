@@ -1,11 +1,12 @@
 # Financial-Tracker
 
-**Personal/communal financial tracker with categorization rules, net worth tracking, budgeting, forecasting, and reporting. 
+**Personal/communal financial tracker with categorization rules, net worth tracking, budgeting, forecasting, and reporting.
 Built by the community, for the community. Privacy-first, self-hostable, no telemetry by default.
 
 ## 🚀 Features
 
 ### Current
+
 - [ ] Manual transaction import (CSV/QIF/OFX)
 - [ ] Automatic categorization with customizable rules
 - [ ] Budget planning
@@ -14,14 +15,10 @@ Built by the community, for the community. Privacy-first, self-hostable, no tele
 
 ### Planned (help wanted!)
 
-
 ## 📸 Screenshots
-
 
 ## 🏗️ Tech Stack
 
-
 ## 🚀 Quick Start (for contributors)
-
 
 🛠️ Development Setup (detailed)
