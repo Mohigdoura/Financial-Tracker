@@ -1,15 +1,17 @@
 import 'package:financial_tracker/services/db.dart';
+import 'package:financial_tracker/services/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   List<int> list = [1, 2, 3];
   final TextEditingController textEditingController = TextEditingController();
   final db = Db();
@@ -31,23 +33,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final authNotifier = ref.read(authProvider.notifier);
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
               'Financial Tracker',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: theme.colorScheme.inversePrimary,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
+
+          IconButton(
+            onPressed: () async => await authNotifier.signOut(),
+            icon: Icon(Icons.logout, color: theme.colorScheme.inversePrimary),
+          ),
+
           Expanded(
             child: ListView.builder(
               itemCount: list.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(list[index].toString()),
+                  title: Text(
+                    list[index].toString(),
+                    style: TextStyle(color: theme.colorScheme.inversePrimary),
+                  ),
                   onTap: () {},
                 );
               },
@@ -67,7 +85,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   if (text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Please enter a value")),
+                      SnackBar(
+                        content: Text(
+                          "Please enter a value",
+                          style: TextStyle(
+                            color: theme.colorScheme.inversePrimary,
+                          ),
+                        ),
+                      ),
                     );
                     return;
                   }
@@ -75,8 +100,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   final number = int.tryParse(text);
                   if (number == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter a valid number'),
+                      SnackBar(
+                        content: Text(
+                          'Please enter a valid number',
+                          style: TextStyle(
+                            color: theme.colorScheme.inversePrimary,
+                          ),
+                        ),
                       ),
                     );
                     return;
@@ -96,11 +126,15 @@ class _MyHomePageState extends State<MyHomePage> {
               },
 
               child: AlertDialog(
-                title: const Text('Add a new item'),
+                title: Text(
+                  'Add a new item',
+                  style: TextStyle(color: theme.colorScheme.inversePrimary),
+                ),
                 content: TextField(
                   autofocus: true,
                   controller: textEditingController,
                   keyboardType: TextInputType.number,
+                  style: TextStyle(color: theme.colorScheme.inversePrimary),
                   decoration: const InputDecoration(hintText: 'Enter a number'),
                 ),
                 actions: [
@@ -109,15 +143,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       final text = textEditingController.text.trim();
                       if (text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please enter a value')),
+                          SnackBar(
+                            content: Text(
+                              'Please enter a value',
+                              style: TextStyle(
+                                color: theme.colorScheme.inversePrimary,
+                              ),
+                            ),
+                          ),
                         );
                         return;
                       }
                       final value = int.tryParse(text);
                       if (value == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Please enter a valid number'),
+                          SnackBar(
+                            content: Text(
+                              'Please enter a valid number',
+                              style: TextStyle(
+                                color: theme.colorScheme.inversePrimary,
+                              ),
+                            ),
                           ),
                         );
                         return;
